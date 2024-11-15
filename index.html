@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Traffic</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #333;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #successMessage {
+            margin-top: 20px;
+            color: green;
+            font-size: 16px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Report Traffic Issue</h1>
+    <form id="reportForm">
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description of the Issue</label>
+            <textarea id="description" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="severity">Severity</label>
+            <select id="severity" required>
+                <option value="">Select Severity</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+        </div>
+        <button type="submit">Submit Report</button>
+    </form>
+
+    <div id="successMessage">Your report has been submitted successfully! <a href="view-reports.html">Click here to view all reports.</a></div>
+</div>
+
+<script>
+    document.getElementById("reportForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Get the values entered by the user
+        var location = document.getElementById("location").value;
+        var description = document.getElementById("description").value;
+        var severity = document.getElementById("severity").value;
+
+        // Create a report object
+        var report = {
+            location: location,
+            description: description,
+            severity: severity
+        };
+
+        // Save the report to localStorage (get existing reports or start with an empty array)
+        var reports = JSON.parse(localStorage.getItem("reports")) || [];
+        reports.push(report);
+        localStorage.setItem("reports", JSON.stringify(reports));
+
+        // Show success message and the link to view reports
+        document.getElementById("successMessage").style.display = "block";
+    });
+</script>
+
+</body>
+</html>
